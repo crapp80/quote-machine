@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Random Quote Machine</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="css/style.css">
+<link href="https://fonts.googleapis.com/css?family=Dosis" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container-fluid">
+  <div class="jumbotron text-center customize">
+   <h1>Famous Quotes</h1><br>
+   <div class="quote-complete">
+     <h2 id="quote-text" class="quote-text text-center"></h2>
+     <h3 id="quote-author" class="quote-author text-right"></h3><br>
+   </div>
+   <div class="row">
+     <div class="col-xs-6">
+       <a href="https://twitter.com/intent/tweet" target="blank" class="twitter"><button type="button" id="button-twitter" class="btn btn-lg btn-default"><i class="fa fa-twitter" aria-hidden="true"></i> Twitter this quote!</button></a>
+     </div>
+     <div class="col-xs-6">
+       <button type="button" id="button-show" class="btn btn-lg btn-default"><i class="fa fa-refresh" aria-hidden="true"></i> Show me a new quote!</button>
+     </div>
+   </div>
+ </div>
+</div>
+<script>
+var url = "http://api.forismatic.com/api/1.0/?method=getQuote&key=457653&format=jsonp&lang=en&jsonp=?";
+//begin function(data)
+var getQuote = function(data) {
+  $(".quote-text").text(data.quoteText);
+  var quot = 'https://twitter.com/intent/tweet?text=' + data.quoteText + ', Author: ' + data.quoteAuthor;
+  if (data.quoteAuthor === '') {
+    data.quoteAuthor = 'Unknown';
+  }
+  $(".quote-author").text('by ' + data.quoteAuthor);
+  $(".twitter").attr("href", quot);
+}; //end function(data)
+$(document).ready(function() {
+  $.getJSON(url, getQuote, 'jsonp');
+});
+$("#button-show").click(function() {
+  $(".quote-complete").fadeOut("slow", function() {$.getJSON(url, getQuote, 'jsonp')}).fadeIn("slow");
+});
+</script>
+</body>
+</html>

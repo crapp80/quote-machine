@@ -1,0 +1,14 @@
+@charset "utf-8";
+
+body{
+  background-color: #B0C0E0;
+}
+
+.customize {
+  background-color: #2090FF;
+  color: #F0FFF0;
+  font-family: 'Dosis', sans-serif;
+}
+.quote-text {
+  min-height: 66px;
+}
